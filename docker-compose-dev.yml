@@ -1,0 +1,18 @@
+version: '2'
+services: 
+  app:
+#Build Dockerfile from source location (test/)
+    build: .
+#Name the image:
+    image: app:1.0.0
+#Override the 'COPY' command in Dockerfile
+#Instead, Map the current source dir to nginx as a volume.
+#This will allow us to make changes to the application file 
+#(in this case: index.html) on the fly and test out the app
+#Without having to rebuild the container.
+    volumes:
+    - ./test:/usr/share/nginx/html
+#Map the external server's port 8080 to the nginx container's 
+#Port 80
+    ports:
+    - "8080:80"
